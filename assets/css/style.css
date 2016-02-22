@@ -1,0 +1,142 @@
+/* size of the page */
+.body {
+	height: 100%;
+	width: 100%;
+	font-family: 'Open Sans', sans-serif;
+}
+.container {
+	min-height: 800px;
+	width: 100%;
+	font-family: 'Open Sans', sans-serif;
+	color: #fff;
+	background: rgba(0,0,0,0.5)
+}
+
+/* background images */
+.snow {
+	background-image: url("../images/snow_1080.jpg");
+    background-color: #000;
+    background-repeat: no-repeat;
+}
+
+.forest {
+	background-image: url("../images/forest_1080.jpg");
+    background-color: #000;
+    background-repeat: no-repeat;
+}
+
+.junk {
+	background-image: url("../images/junk_1080.jpg");
+    background-color: #000;
+    background-repeat: no-repeat;
+}
+
+.ship {
+	background-image: url("../images/ship_1080.jpg");
+    background-color: #000;
+    background-repeat: no-repeat;
+}
+
+.street {
+	background-image: url("../images/street_1080.jpg");
+    background-color: #000;
+    background-repeat: no-repeat;
+}
+
+.overlay {
+	height: 100%;
+
+}
+
+/* header */
+.navbar-brand img {
+	max-height: 36px;
+}
+
+.navbar-container {
+	max-width: 1200px;
+	margin: 0px auto;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.navbar-brand {
+    padding: 7px 15px !important;
+    line-height: 35px !important;
+}
+
+.navbar-default {
+	background-color: #000 !important;
+    border-color: #000 !important;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #fff !important;
+}
+
+.navbar-default .navbar-nav>li>a:focus{
+    color: #777 !important;
+}
+
+ .navbar-default .navbar-nav>li>a:hover {
+ 	color: #777 !important;	
+ }
+
+ .navbar-header {
+	min-width: 600px;
+ }
+
+.dropdown-menu {
+    border:none !important;
+}
+
+.dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover {
+    background-color: #e7e7e7 !important;
+}
+
+h1 {
+ 	color: #fff !important;
+ 	font-size: 30px !important;
+ 	margin-top: 6px !important;
+ }
+
+.startPlayer img {
+	width: 100%;
+	margin: 0px auto;
+	padding: 5px;
+	/*border: 1px solid #9e9e9e;*/
+}
+
+.startPlayer img:hover {
+	-moz-box-shadow: 0px 0px 5px 5px #999;
+	-webkit-box-shadow: 0px 0px 5px 5px #999;
+	box-shadow: 0px 0px 5px 5px #999;
+}
+
+.startPlayer h3, .startPlayer p{
+	width: 100%;
+	background-color: #999;
+	text-align: center;
+	padding-bottom: 5px;
+}
+
+.startPlayer h3 {
+    position: relative;
+    top: -90px;
+    padding-top: 5px;
+    font-size: 1.1em
+}
+
+.startPlayer p{
+    position: relative;
+    top: -100px;
+    font-size: 0.8em
+}
+
+.attackPlayer {
+	text-align: center;
+}
+
+.attackPlayer img {
+	width: 100%;
+	margin: 10px 0px;
+}
