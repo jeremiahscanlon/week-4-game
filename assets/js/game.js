@@ -9,7 +9,6 @@ $(document).ready(function() {
 	// ==========================================================================
 
 	var fighterDivId = ['#obiWan', '#rey', '#kyloRen', '#darthMaul']
-	var fighterObject = [fighters.obiWan, fighters.rey, fighters.kyloRen, fighters.darthMaul]
 
 	// create main object for game
 	var fighters = {
