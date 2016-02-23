@@ -49,6 +49,10 @@
 }
 
 /* header */
+.navbar {
+	margin-bottom: 0px !important;
+}
+
 .navbar-brand img {
 	max-height: 36px;
 }

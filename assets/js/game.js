@@ -66,7 +66,7 @@ $(document).ready(function() {
 	}
 	
 	var audio = new Audio('assets/sounds/sthtwrl1.wav');
-	var audio2 = new Audio('assets/sounds/doublebladed twirl.wav');
+	var audio2 = new Audio('assets/sounds/doublebladedtwirl.wav');
 
 	// ==========================================================================
 	// Functions
@@ -104,37 +104,60 @@ $(document).ready(function() {
 	// attack
 	var attack = function(arr) {
 		if (points.opponentNow) {
+			
 			$("#youImage").animate({left:"+=600px"}, "fast");
 			audio.play(audio);
     		$("#youImage").animate({left:"-=600px"}, "fast");
     		$("#oppImage").delay( 500 ).animate({left:"-=600px"}, "fast");
     		audio.play(audio2);
     		$("#oppImage").animate({left:"+=600px"}, "fast");
+
 			points.newPower	= points.newPower + points.attackPower;
 			points.healthOpponent = points.healthOpponent - points.newPower;
 			points.healthPoints = points.healthPoints - points.counterPower;
-			var youFighterInfo = '<p>Health Points Remaining: '+ points.healthPoints +'</p> <p>Attack Points: ' + points.newPower + '<p>'
-			$("#yourPlayerInfo").empty().append(youFighterInfo);
 			var oppFighterInfo = '<p>Health Points Remaining: '+ points.healthOpponent +'</p> <p>Attack Points: ' + points.counterPower + '<p>'
 			$("#yourOpponentInfo").empty().append(oppFighterInfo);
+			var youFighterInfo = '<p>Health Points Remaining: '+ points.healthPoints +'</p> <p>Attack Points: ' + points.newPower + '<p>'
+			$("#yourPlayerInfo").empty().append(youFighterInfo);
 			var attackText = '<h2>You attacked with '+points.newPower+' points and your opponent countered with '+points.counterPower+' points.</h2>'
 			$("#attackText").empty().append(attackText);
+
+			// if the opponents health has dropped to zero or below
 			if(points.healthOpponent <= 0) {
+				
+				// keep track of how many wins
 				points.winCounter++;
-				console.log('Win Counter: '+points.winCounter);
+
+				// if you have defeated 3 opponents then you have destroyed all enemies
 				if (points.winCounter == 3) {
+					
+					//you do not currently have an opponent
 					points.opponentNow = false;
+					
+					// print to document congratulations
 					var attackText = '<h2>Congrats. You have defeated all of your enemies!</h2>'
-					$("#attackText").empty().append(attackText);	
+					$("#attackText").empty().append(attackText);
+				// if it's less than three then you still have more work to do	
 				} else {
+					
+					// you do not currently have an opponent
 					points.opponentNow = false;
+
+					// print to screen good job and do it again.
 					var attackText = '<h2>Good job! Please choose your next opponent.</h2>'
 					$("#attackText").empty().append(attackText);
 				}
+				
+				// remove the enemies information
 				$("#yourOpponentName").empty()
 				$("#yourOpponentInfo").empty()
+				
+				// exit beacuase you struck first, so there is no reason for retaliation
 				return;
+
 			}
+
+			//
 			if(points.healthPoints <= 0){
 				var attackText = '<h2>You were defeated by this enemy. Please <a href="#" id="startOverLink">try again.</a></h2>'
 				$("#attackText").empty().append(attackText);
@@ -148,7 +171,7 @@ $(document).ready(function() {
 		}
 	}
 
-	// attack
+	// Start Over
 	var startOver = function() {
 		location.reload();
 	}
