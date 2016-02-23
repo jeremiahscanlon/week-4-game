@@ -17,16 +17,16 @@ $(document).ready(function() {
 			image : 'assets/images/obi-wan.png',
 			divid : '#obiWan',
 			health : 125,
-			attack : 8,
-			counter : 8,
+			attack : 15,
+			counter : 15,
 		},
 		rey : {
 			name : 'Rey',
 			image : 'assets/images/rey.png',
 			divid : '#rey',
 			health : 100,
-			attack : 5,
-			counter : 5,
+			attack : 10,
+			counter : 10,
 		},
 		kyloRen : {
 			name : 'Kylo Ren',
@@ -51,13 +51,22 @@ $(document).ready(function() {
 		healthPoints : 0,
 		// your attack power
 		attackPower : 0,
+		// calculated new power
+		newPower : 0,
 		// oponents health
 		healthOpponent : 0,
 		// opponents counter power
 		counterPower : 0,
+		// select opponent counter	
+		selectCounter : 0,
+		// is there an opponent
+		opponentNow : false,
+		// win counter
+		winCounter : 0
 	}
-	// select counter
-	var selectCounter = 0;
+	
+	var audio = new Audio('assets/sounds/sthtwrl1.wav');
+	var audio2 = new Audio('assets/sounds/doublebladed twirl.wav');
 
 	// ==========================================================================
 	// Functions
@@ -68,12 +77,12 @@ $(document).ready(function() {
 		$(arr.divid).hide();
 		points.healthPoints = arr.health;
 		points.attackPower	= arr.attack;
-		var youFighterName = '<img src="' + arr.image +'" alt="'+ arr.name +'"> <h3>'+ arr.name +'</h3>'
+		var youFighterName = '<img id="youImage" src="' + arr.image +'" alt="'+ arr.name +'"> <h3>'+ arr.name +'</h3>'
 		$("#yourPlayerName").empty().append(youFighterName);
 		var youFighterInfo = '<p>Health Points Remaining: '+ points.healthPoints +'</p> <p>Attack Points: ' + points.attackPower + '<p>'
 		$("#yourPlayerInfo").empty().append(youFighterInfo);
 		$(".chooseHeader").empty().append('<h2>Choose Your Opponent</h2>');
-		selectCounter++;
+		points.selectCounter++;
 	}
 
 	// select opponent
@@ -81,26 +90,62 @@ $(document).ready(function() {
 		$(arr.divid).hide();
 		points.healthOpponent = arr.health;
 		points.counterPower	= arr.attack;
-		var oppFighterName = '<img src="' + arr.image +'" alt="'+ arr.name +'"> <h3>'+ arr.name +'</h3>'
+		var oppFighterName = '<img id="oppImage" src="' + arr.image +'" alt="'+ arr.name +'"> <h3>'+ arr.name +'</h3>'
 		$("#yourOpponentName").empty().append(oppFighterName);
 		var oppFighterInfo = '<p>Health Points Remaining: '+ points.healthOpponent +'</p> <p>Attack Points: ' + points.counterPower + '<p>'
 		$("#yourOpponentInfo").empty().append(oppFighterInfo);
+		points.opponentNow = true;
+		points.selectCounter++;
+		if (points.selectCounter == 4) {
+			$(".chooseHeader").empty();
+		}
 	}
 
 	// attack
-	var attack = function() {
-		console.log(selectCounter);
-		console.log('Your Health: ' + points.healthPoints);
-		console.log('Opponent Health: ' + points.healthOpponent);
-		console.log('Your Attack: ' + points.attackPower);
-		console.log('Opponent Attack: ' + points.counterPower);
-		points.healthOpponent = points.healthOpponent - points.attackPower;
-		points.healthPoints = points.healthPoints - points.counterPower;
-		points.attackPower	= points.attackPower * 2;
-
-		console.log('Your Health: ' + points.healthPoints);
-		console.log('Opponent Health: ' + points.healthOpponent);
-		
+	var attack = function(arr) {
+		if (points.opponentNow) {
+			$("#youImage").animate({left:"+=600px"}, "fast");
+			audio.play(audio);
+    		$("#youImage").animate({left:"-=600px"}, "fast");
+    		$("#oppImage").delay( 500 ).animate({left:"-=600px"}, "fast");
+    		audio.play(audio2);
+    		$("#oppImage").animate({left:"+=600px"}, "fast");
+			points.newPower	= points.newPower + points.attackPower;
+			points.healthOpponent = points.healthOpponent - points.newPower;
+			points.healthPoints = points.healthPoints - points.counterPower;
+			var youFighterInfo = '<p>Health Points Remaining: '+ points.healthPoints +'</p> <p>Attack Points: ' + points.newPower + '<p>'
+			$("#yourPlayerInfo").empty().append(youFighterInfo);
+			var oppFighterInfo = '<p>Health Points Remaining: '+ points.healthOpponent +'</p> <p>Attack Points: ' + points.counterPower + '<p>'
+			$("#yourOpponentInfo").empty().append(oppFighterInfo);
+			var attackText = '<h2>You attacked with '+points.newPower+' points and your opponent countered with '+points.counterPower+' points.</h2>'
+			$("#attackText").empty().append(attackText);
+			if(points.healthOpponent <= 0) {
+				points.winCounter++;
+				console.log('Win Counter: '+points.winCounter);
+				if (points.winCounter == 3) {
+					points.opponentNow = false;
+					var attackText = '<h2>Congrats. You have defeated all of your enemies!</h2>'
+					$("#attackText").empty().append(attackText);	
+				} else {
+					points.opponentNow = false;
+					var attackText = '<h2>Good job! Please choose your next opponent.</h2>'
+					$("#attackText").empty().append(attackText);
+				}
+				$("#yourOpponentName").empty()
+				$("#yourOpponentInfo").empty()
+				return;
+			}
+			if(points.healthPoints <= 0){
+				var attackText = '<h2>You were defeated by this enemy. Please <a href="#" id="startOverLink">try again.</a></h2>'
+				$("#attackText").empty().append(attackText);
+				$('#startOverLink').click(function(){
+					startOver();
+				});
+			}
+		} else {
+			var attackText = '<h2>You must choose an enemy.</h2>'
+			$("#attackText").empty().append(attackText);
+		}
 	}
 
 	// attack
@@ -114,7 +159,7 @@ $(document).ready(function() {
 
 	// individual fighter selection buttons
 	$('#obiWan').click(function(){
-		if (selectCounter == 0) {
+		if (points.selectCounter == 0) {
 			selectYou(fighters.obiWan);
 		} else {
 			selectOpponent(fighters.obiWan);
@@ -122,21 +167,21 @@ $(document).ready(function() {
 	});
 
 	$('#rey').click(function(){
-		if (selectCounter == 0) {
+		if (points.selectCounter == 0) {
 			selectYou(fighters.rey);
 		} else {
 			selectOpponent(fighters.rey);
 		}
 	});
 	$('#kyloRen').click(function(){
-		if (selectCounter == 0) {
+		if (points.selectCounter == 0) {
 			selectYou(fighters.kyloRen);
 		} else {
 			selectOpponent(fighters.kyloRen);
 		}
 	});
 	$('#darthMaul').click(function(){
-		if (selectCounter == 0) {
+		if (points.selectCounter == 0) {
 			selectYou(fighters.darthMaul);
 		} else {
 			selectOpponent(fighters.darthMaul);
@@ -145,7 +190,17 @@ $(document).ready(function() {
 
 	// attack button calls function
 	$('#attackButton').click(function(){
-		attack();
+		if (points.winCounter < 3) {
+			if (points.selectCounter < 1) {
+				var attackText = '<h2>Select your player first.</h2>'
+				$("#attackText").empty().append(attackText);
+			} else if (points.selectCounter == 1) {
+				var attackText = '<h2>Select an opponent first.</h2>'
+				$("#attackText").empty().append(attackText);
+			} else {
+				attack();
+			}
+		}
 	});
 
 	// start over button calls function
