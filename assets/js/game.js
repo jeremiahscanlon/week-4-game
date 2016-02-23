@@ -46,6 +46,7 @@ $(document).ready(function() {
 		},
 	}
 
+	// creating universal variables within object
 	var points = {
 		// your health
 		healthPoints : 0,
@@ -65,6 +66,7 @@ $(document).ready(function() {
 		winCounter : 0
 	}
 	
+	// audio files to be used in attacks
 	var audio = new Audio('assets/sounds/sthtwrl1.wav');
 	var audio2 = new Audio('assets/sounds/doublebladedtwirl.wav');
 
@@ -185,7 +187,13 @@ $(document).ready(function() {
 		if (points.selectCounter == 0) {
 			selectYou(fighters.obiWan);
 		} else {
-			selectOpponent(fighters.obiWan);
+			if (points.opponentNow) {
+				var attackText = '<h2>You must finish your current battle first.</h2>'
+				$("#attackText").empty().append(attackText);
+			} else {
+				selectOpponent(fighters.obiWan);	
+			}
+			
 		}
 	});
 
@@ -193,21 +201,36 @@ $(document).ready(function() {
 		if (points.selectCounter == 0) {
 			selectYou(fighters.rey);
 		} else {
-			selectOpponent(fighters.rey);
+			if (points.opponentNow) {
+				var attackText = '<h2>You must finish your current battle first.</h2>'
+				$("#attackText").empty().append(attackText);
+			} else {
+				selectOpponent(fighters.rey);	
+			}
 		}
 	});
 	$('#kyloRen').click(function(){
 		if (points.selectCounter == 0) {
 			selectYou(fighters.kyloRen);
 		} else {
-			selectOpponent(fighters.kyloRen);
+			if (points.opponentNow) {
+				var attackText = '<h2>You must finish your current battle first.</h2>'
+				$("#attackText").empty().append(attackText);
+			} else {
+				selectOpponent(fighters.kyloRen);	
+			}
 		}
 	});
 	$('#darthMaul').click(function(){
 		if (points.selectCounter == 0) {
 			selectYou(fighters.darthMaul);
 		} else {
-			selectOpponent(fighters.darthMaul);
+			if (points.opponentNow) {
+				var attackText = '<h2>You must finish your current battle first.</h2>'
+				$("#attackText").empty().append(attackText);
+			} else {
+				selectOpponent(fighters.darthMaul);
+			}
 		}
 	});
 
