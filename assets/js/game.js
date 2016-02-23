@@ -46,16 +46,18 @@ $(document).ready(function() {
 		},
 	}
 
+	var points = {
+		// your health
+		healthPoints : 0,
+		// your attack power
+		attackPower : 0,
+		// oponents health
+		healthOpponent : 0,
+		// opponents counter power
+		counterPower : 0,
+	}
 	// select counter
 	var selectCounter = 0;
-	// your health
-	var healthPoints = 0;
-	// your attack power
-	var attackPower = 0;
-	// oponents health
-	var healthOpponent = 0;
-	// opponents counter power
-	var counterPower = 0;
 
 	// ==========================================================================
 	// Functions
@@ -64,10 +66,12 @@ $(document).ready(function() {
 	// select your fighter
 	var selectYou = function(arr) {
 		$(arr.divid).hide();
-		healthPoints = arr.health;
-		attackPower	= arr.attack;
-		var youFighter = '<img src="' + arr.image +'" alt="'+ arr.name +'"> <h3>'+ arr.name +'</h3> <p>Health Points Remaining: '+ healthPoints +'</p>'
-		$("#yourPlayer").empty().append(youFighter);
+		points.healthPoints = arr.health;
+		points.attackPower	= arr.attack;
+		var youFighterName = '<img src="' + arr.image +'" alt="'+ arr.name +'"> <h3>'+ arr.name +'</h3>'
+		$("#yourPlayerName").empty().append(youFighterName);
+		var youFighterInfo = '<p>Health Points Remaining: '+ points.healthPoints +'</p> <p>Attack Points: ' + points.attackPower + '<p>'
+		$("#yourPlayerInfo").empty().append(youFighterInfo);
 		$(".chooseHeader").empty().append('<h2>Choose Your Opponent</h2>');
 		selectCounter++;
 	}
@@ -75,23 +79,28 @@ $(document).ready(function() {
 	// select opponent
 	var selectOpponent = function(arr) {
 		$(arr.divid).hide();
-		var healthOpponent = arr.health;
-		var counterPower	= arr.attack;
-		var oppFighter = '<img src="' + arr.image +'" alt="'+ arr.name +'"> <h3>'+ arr.name +'</h3> <p>Health Points Remaining: '+ healthOpponent +'</p>'
-		$("#yourOpponent").empty().append(oppFighter);
+		points.healthOpponent = arr.health;
+		points.counterPower	= arr.attack;
+		var oppFighterName = '<img src="' + arr.image +'" alt="'+ arr.name +'"> <h3>'+ arr.name +'</h3>'
+		$("#yourOpponentName").empty().append(oppFighterName);
+		var oppFighterInfo = '<p>Health Points Remaining: '+ points.healthOpponent +'</p> <p>Attack Points: ' + points.counterPower + '<p>'
+		$("#yourOpponentInfo").empty().append(oppFighterInfo);
 	}
 
 	// attack
 	var attack = function() {
 		console.log(selectCounter);
-		console.log(healthOpponent);
-		console.log(healthPoints);
-		console.log(attackPower);
-		console.log(counterPower);
-		var healthOpponent = healthOpponent - attackPower;
-		var healthPoints = healthPoints - counterPower;
-		console.log(healthOpponent);
-		console.log(healthPoints);
+		console.log('Your Health: ' + points.healthPoints);
+		console.log('Opponent Health: ' + points.healthOpponent);
+		console.log('Your Attack: ' + points.attackPower);
+		console.log('Opponent Attack: ' + points.counterPower);
+		points.healthOpponent = points.healthOpponent - points.attackPower;
+		points.healthPoints = points.healthPoints - points.counterPower;
+		points.attackPower	= points.attackPower * 2;
+
+		console.log('Your Health: ' + points.healthPoints);
+		console.log('Opponent Health: ' + points.healthOpponent);
+		
 	}
 
 	// attack
