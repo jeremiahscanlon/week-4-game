@@ -84,9 +84,9 @@ $(document).ready(function() {
 		points.healthPoints = arr.health;
 		points.attackPower	= arr.attack;
 		var youFighterName = '<img id="youImage" src="' + arr.image +'" alt="'+ arr.name +'"> <h3>'+ arr.name +'</h3>'
-		$("#yourPlayerName").empty().append(youFighterName);
+		$("#yourPlayerName").html(youFighterName);
 		var youFighterInfo = '<p>Health Points Remaining: '+ points.healthPoints +'</p> <p>Attack Points: ' + points.attackPower + '<p>'
-		$("#yourPlayerInfo").empty().append(youFighterInfo);
+		$("#yourPlayerInfo").html(youFighterInfo);
 
 		// increment select counter
 		points.selectCounter++;
@@ -102,9 +102,9 @@ $(document).ready(function() {
 		points.healthOpponent = arr.health;
 		points.counterPower	= arr.attack;
 		var oppFighterName = '<img id="oppImage" src="' + arr.image +'" alt="'+ arr.name +'"> <h3>'+ arr.name +'</h3>'
-		$("#yourOpponentName").empty().append(oppFighterName);
+		$("#yourOpponentName").html(oppFighterName);
 		var oppFighterInfo = '<p>Health Points Remaining: '+ points.healthOpponent +'</p> <p>Attack Points: ' + points.counterPower + '<p>'
-		$("#yourOpponentInfo").empty().append(oppFighterInfo);
+		$("#yourOpponentInfo").html(oppFighterInfo);
 		
 		// register that you now have an opponent
 		points.opponentNow = true;
@@ -130,17 +130,17 @@ $(document).ready(function() {
     		// calculate opponents health chnage and print to screen
 			points.healthPoints = points.healthPoints - points.counterPower;
 			var oppFighterInfo = '<p>Health Points Remaining: '+ points.healthOpponent +'</p> <p>Attack Points: ' + points.counterPower + '<p>'
-			$("#yourOpponentInfo").empty().append(oppFighterInfo);
+			$("#yourOpponentInfo").html(oppFighterInfo);
 
 			// calculate your health change, your new attack power points, and print to screen
 			points.newPower	= points.newPower + points.attackPower;
 			points.healthOpponent = points.healthOpponent - points.newPower;
 			var youFighterInfo = '<p>Health Points Remaining: '+ points.healthPoints +'</p> <p>Attack Points: ' + points.newPower + '<p>'
-			$("#yourPlayerInfo").empty().append(youFighterInfo);
+			$("#yourPlayerInfo").html(youFighterInfo);
 			
 			// message what happened
 			var attackText = '<h2>You attacked with '+points.newPower+' points and your opponent countered with '+points.counterPower+' points.</h2>'
-			$("#attackText").empty().append(attackText);
+			$("#attackText").html(attackText);
 
 			// if the opponents health has dropped to zero or below
 			if(points.healthOpponent <= 0) {
@@ -156,7 +156,7 @@ $(document).ready(function() {
 					
 					// message congratulations
 					var attackText = '<h2>Congrats. You have defeated all of your enemies!</h2>'
-					$("#attackText").empty().append(attackText);
+					$("#attackText").html(attackText);
 
 					// change attack button to fight again
 					$('#attackButton').text('Fight Again').removeClass( "btn-danger" ).addClass( "btn-warning" );
@@ -172,7 +172,7 @@ $(document).ready(function() {
 
 					// message good job and do it again.
 					var attackText = '<h2>Good job! Please choose your next opponent.</h2>'
-					$("#attackText").empty().append(attackText);
+					$("#attackText").html(attackText);
 				}
 				
 				// remove the enemies information
@@ -189,7 +189,7 @@ $(document).ready(function() {
 				
 				// message to screen that you were defeated
 				var attackText = '<h2>You were defeated by this enemy. Please <a href="#" id="startOverLink">try again.</a></h2>'
-				$("#attackText").empty().append(attackText);
+				$("#attackText").html(attackText);
 				$('#startOverLink').click(function(){
 					startOver();
 				});
@@ -204,7 +204,7 @@ $(document).ready(function() {
 		// if you don't have an opponent message that you must choose one first
 		} else {
 			var attackText = '<h2>You must choose an enemy.</h2>'
-			$("#attackText").empty().append(attackText);
+			$("#attackText").html(attackText);
 		}
 	}
 
@@ -236,7 +236,7 @@ $(document).ready(function() {
 			if (points.opponentNow) {
 				// message that you have an opponent already
 				var attackText = '<h2>You must finish your current battle first.</h2>'
-				$("#attackText").empty().append(attackText);
+				$("#attackText").html(attackText);
 			} else {
 				// run the function to create as opponent
 				selectOpponent(fighters.obiWan);	
@@ -251,7 +251,7 @@ $(document).ready(function() {
 		} else {
 			if (points.opponentNow) {
 				var attackText = '<h2>You must finish your current battle first.</h2>'
-				$("#attackText").empty().append(attackText);
+				$("#attackText").html(attackText);
 			} else {
 				selectOpponent(fighters.rey);	
 			}
@@ -263,7 +263,7 @@ $(document).ready(function() {
 		} else {
 			if (points.opponentNow) {
 				var attackText = '<h2>You must finish your current battle first.</h2>'
-				$("#attackText").empty().append(attackText);
+				$("#attackText").html(attackText);
 			} else {
 				selectOpponent(fighters.kyloRen);	
 			}
@@ -275,7 +275,7 @@ $(document).ready(function() {
 		} else {
 			if (points.opponentNow) {
 				var attackText = '<h2>You must finish your current battle first.</h2>'
-				$("#attackText").empty().append(attackText);
+				$("#attackText").html(attackText);
 			} else {
 				selectOpponent(fighters.darthMaul);
 			}
@@ -293,14 +293,14 @@ $(document).ready(function() {
 				
 				//message that you have to choose your player
 				var attackText = '<h2>Select your player first.</h2>'
-				$("#attackText").empty().append(attackText);
+				$("#attackText").html(attackText);
 
 			// if you hit the button before choosing 
 			} else if (points.selectCounter == 1) {
 
 				//message that you have to choose your opponent
 				var attackText = '<h2>Select an opponent first.</h2>'
-				$("#attackText").empty().append(attackText);
+				$("#attackText").html(attackText);
 
 			} else {
 				
